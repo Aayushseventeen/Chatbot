@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Questions</title>
+</head>
+<body>
+    <h1>Select Questions</h1>
+    <form method="POST">
+        Level: <input type="number" name="level"><br>
+        Parent: <input type="number" name="parent"><br>
+        <input type="submit" value="Select">
+    </form>
+    <div id="results"></div>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            fetch('/select', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            });
+        });
+    </script>
+</body>
+</html>
